@@ -12,14 +12,31 @@
   margin-top: 20px;
 }
 
+.header {
+   width: 70%;
+   margin: 0 auto;
+   padding-top: 10px;
+   text-align: left;
+   font-weight: 400;
+}
+
+.name {
+    text-align: center;
+}
+
+.description {
+    text-align: center;
+}
+
 .outlined {
   width: 100%;
 }
 
 .name {
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 20px;
     cursor: pointer;
+    padding-left: 15px;
 }
 
 .list {
@@ -33,4 +50,42 @@ button {
   color: white;
   border: none;
   cursor: pointer;
+}
+
+.card-container {
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    background-color: #E0E0E0;
+}
+
+.expand-more {
+    cursor: pointer;
+    padding-right: 15px;
+    font-size: 20px;
+}
+
+.reponame {
+    padding-top: 20px;
+    padding-left: 10px;
+    text-align: left;
+}
+
+.repodescription {
+    padding-left: 10px;
+    text-align: left;
+}
+
+.repo-card {
+    background-color: #E0E0E0;
+    width: 70%;
+    height: 120px;
+    margin: 0 auto;
+}
+
+.card {
+   background-color: red;
 }
