@@ -2,14 +2,14 @@ import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import StarRateIcon from '@mui/icons-material/StarRate';
+import StarRateIcon from "@mui/icons-material/StarRate";
 import axios from "axios";
 import "./searchbar.css";
 
 const BasicTextFields = () => {
   const [query, setQuery] = useState("");
   const [users, setUsers] = useState([]);
-  const [arrow, setArrow] = useState(false);
+  const [expandedUser, setExpandedUser] = useState(null);
 
   const handleChange = (e) => {
     setQuery(e.target.value);
@@ -22,11 +22,10 @@ const BasicTextFields = () => {
     );
     setUsers(response.data.items);
   };
-
-  const getRepos = async (username) => {
+  const getRepos = async (username, userId) => {
     let res = await axios.get(`https://api.github.com/users/${username}/repos`);
     let userCopy = [...users];
-    let selectedUser = userCopy.find((user) => user.login === username);
+    let selectedUser = userCopy.find((user) => user.id === userId);
     if (res.data.length === 0) {
       selectedUser.repos = [{ name: "No repositories found" }];
     } else {
@@ -39,7 +38,7 @@ const BasicTextFields = () => {
     setUsers(userCopy);
   };
 
-//   console.log(arrow);
+  //   console.log(arrow);
 
   return (
     <div className="overall">
@@ -62,13 +61,26 @@ const BasicTextFields = () => {
           <div key={user.id}>
             <div className="card-container">
               <h1 className="name">{user.login}</h1>
-              <ExpandMoreIcon
-                onClick={() => getRepos(user.login) }
-                className="expand-more"
-              />
+              <div>
+              {expandedUser === user.id ? (
+                  <ExpandLessIcon
+                    onClick={() => setExpandedUser(null)}
+                    className="expand-less"
+                  />
+                ) : (
+                  <ExpandMoreIcon
+                    onClick={() => {
+                      getRepos(user.login, user.id);
+                      setExpandedUser(user.id);
+                    }}
+                    className="expand-more"
+                  />
+                )}
+              </div>
             </div>
             <ul>
               {user.repos &&
+                expandedUser === user.id &&
                 user.repos.map((repo, i) => (
                   <div className="repo-card" key={repo.name}>
                     <div>
